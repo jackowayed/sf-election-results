@@ -38,7 +38,11 @@ loadJsonFilesFromZip(filename,
         var ranks = [];
 
         contest.Marks.filter(function(mark){ return !mark.IsAmbiguous }).forEach(function(mark){
-          ranks.push(mark);
+          // Quick and dirty way to map final round votes in the DA race instead of first choice.
+          // (This filtering should happen after we check for overvotes.)
+          if (mark.CandidateId !== 16 && mark.CandidateId !== 17 && mark.CandidateId !== 45) {
+            ranks.push(mark);
+          }
         });
 
         ranks.sort(function(a,b){
